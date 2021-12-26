@@ -24,6 +24,8 @@ export default {
             const my = new MessageEmbed()
                 .setColor("#1877f2")
                 .setTitle(`Current account: \`\`${res.currentAccount}\`\``)
+                .addField("Following", account.following[0] ? account.following.join(", ") : "None")
+                .addField("Follower", account.follower[0] ? account.follower.join(", ") : "None")
                 .setFooter('Joined')
                 .setTimestamp(account.created);
 
