@@ -35,17 +35,18 @@ export default {
             const embed = new MessageEmbed()
                 .setColor('#FF665B')
                 .setTitle('Invalid username')
-                .setDescription('Username must be alphanumeric')
-            return interaction.reply({ embeds: [embed], ephemeral: true })
+                .setDescription('Username must be alphanumeric');
+            return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        const resUsername = await accountDB.findOne({ username: interaction.options.getString("username") })
+        const resUsername = await accountDB.findOne({ username: interaction.options.getString("username") });
+
         if(resUsername) {
             const embed = new MessageEmbed()
                 .setColor('#FF665B')
                 .setTitle('Username already taken')
-                .setDescription('Choose a different username')
-            return interaction.reply({ embeds: [embed], ephemeral: true })
+                .setDescription('Choose a different username');
+            return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
         const confirm = new MessageEmbed()
@@ -54,7 +55,8 @@ export default {
             .setDescription(
                 `Username: ||\`\`${interaction.options.getString('username')}\`\`||
                 Password: ||\`\`${interaction.options.getString('password')}\`\`||`
-            );
+            )
+            .setFooter("You can't change your username after joining.");
 
         const row = new MessageActionRow()
             .addComponents(
@@ -93,8 +95,10 @@ export default {
                         userID: interaction.user.id,
                         created: interaction.createdAt,
                         username: interaction.options.getString('username'),
+                        displayname: interaction.options.getString('username'),
                         password: interaction.options.getString('password'),
                         login: false,
+                        description: "",
                         posts: [],
                         friend: [],
                         follower: [],
@@ -112,7 +116,7 @@ export default {
                 const yesembed = new MessageEmbed()
                     .setColor('#1877f2')
                     .setTitle('Joined!')
-                    .setDescription('Use ``/login`` command to log in')
+                    .setDescription('Use ``/login`` command to log in');
 
                 i.update({
                     embeds: [yesembed],
@@ -121,7 +125,7 @@ export default {
             } else {
                 const noembed = new MessageEmbed()
                     .setColor('#FF665B')
-                    .setTitle('Cancelled')
+                    .setTitle('Cancelled');
 
                 i.update({
                     embeds: [noembed],
@@ -135,7 +139,7 @@ export default {
                 const timeoutembed = new MessageEmbed()
                     .setColor('#FF665B')
                     .setTitle('Timeout')
-                    .setDescription('Please try again.')
+                    .setDescription('Please try again.');
                 await interaction.editReply({
                     embeds: [timeoutembed],
                     components: [],

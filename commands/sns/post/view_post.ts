@@ -6,7 +6,7 @@ import discordDB from '../../../db/discorddb';
 
 export default {
     category: 'SNS',
-    description: 'Login into CordBook',
+    description: 'View a user\'s posts',
     slash: true,
     testOnly: true,
     options: [

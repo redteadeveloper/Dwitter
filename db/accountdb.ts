@@ -13,6 +13,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    displayname: {
+        type: String,
+        required: true,
+    },
     password: {
         type: String,
         required: true,
@@ -20,6 +24,10 @@ const schema = new mongoose.Schema({
     login: {
         type: Boolean,
         required: true,
+    },
+    description: {
+        type: String,
+        required: false,
     },
     posts: {
         type: Array,

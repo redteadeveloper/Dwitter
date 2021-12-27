@@ -10,7 +10,7 @@ export async function loginCheck(discordID: String) {
     }
 }
 
-export async function currentUser(discordID: String) {
+export async function currentAccount(discordID: String) {
     const res = await discordDB.findOne({ userID: discordID });
-    return res.currentAccount
+    return res.currentAccount ?? null
 }

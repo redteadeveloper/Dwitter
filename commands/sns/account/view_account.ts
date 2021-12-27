@@ -6,7 +6,7 @@ import discordDB from '../../../db/discorddb';
 
 export default {
     category: 'SNS',
-    description: 'Login into CordBook',
+    description: 'View account info',
     slash: true,
     testOnly: true,
     options: [
@@ -35,7 +35,8 @@ export default {
         } else {
             const embed = new MessageEmbed()
                 .setColor("#1877f2")
-                .setTitle(`Username: \`\`${account.username}\`\``)
+                .setTitle(`**${account.displayname}** / @${account.username}`)
+                .addField("Description", account.description === "" ? "None" : account.description)
                 .addField("Following", account.following[0] ? account.following.join(", ") : "None")
                 .addField("Follower", account.follower[0] ? account.follower.join(", ") : "None")
                 .setFooter('Joined')
@@ -68,6 +69,15 @@ export default {
             });
 
             collector.on('collect', async (i: MessageComponentInteraction) => {
+                if (!myAccount) {
+                    const not = new MessageEmbed()
+                        .setColor("#FF665B")
+                        .setTitle("Not logged in");
+
+                    interaction.editReply({ embeds: [not], components: [], });
+                    return;
+                }
+
                 if (i.customId === 'follow') {
                     if (account.follower.includes(my.currentAccount)) {
                         const already = new MessageEmbed()

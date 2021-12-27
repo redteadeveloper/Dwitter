@@ -3,7 +3,7 @@ import { ICommand } from 'wokcommands';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import accountDB from '../../../db/accountdb';
 import discordDB from '../../../db/discorddb';
-import { loginCheck, currentUser } from '../../../modules/tools';
+import { loginCheck, currentAccount } from '../../../modules/tools';
 
 export default {
     category: 'SNS',
@@ -58,13 +58,13 @@ export default {
         }
 
         const post = {
-            author: await currentUser(interaction.user.id),
+            author: await currentAccount(interaction.user.id),
             title: interaction.options.getString("title"),
             content: interaction.options.getString("content"),
             created: interaction.createdAt
         }
 
-        await accountDB.updateOne({ username: await currentUser(interaction.user.id) }, { $push: { posts: post }})
+        await accountDB.updateOne({ username: await currentAccount(interaction.user.id) }, { $push: { posts: post }})
 
         const embed = new MessageEmbed()
             .setColor("#1877f2")
