@@ -6,7 +6,7 @@ import discordDB from '../../../db/discorddb';
 
 export default {
     category: 'SNS',
-    description: 'View account info',
+    description: 'View account profile',
     slash: true,
     testOnly: true,
     options: [

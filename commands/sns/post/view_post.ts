@@ -40,7 +40,7 @@ export default {
         function generatePostEmbed(n: number) {
             const embed = new MessageEmbed()
                 .setColor("#1877f2")
-                .setAuthor(`${interaction.options.getString("username")}`)
+                .setAuthor(`${account.displayname} / @${interaction.options.getString("username")}`)
                 .setTitle(posts[n].title)
                 .setDescription(posts[n].content)
                 .setFooter(`${n+1}/${posts.length}`)
