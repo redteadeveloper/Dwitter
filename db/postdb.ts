@@ -13,34 +13,22 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    displayname: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    login: {
-        type: Boolean,
-        required: true,
-    },
-    description: {
+    title: {
         type: String,
         required: false,
     },
-    friend: {
+    content: {
+        type: String,
+        required: false,
+    },
+    like: {
         type: Array,
         required: false,
     },
-    follower: {
-        type: Array,
-        required: false,
-    },
-    following: {
+    comment: {
         type: Array,
         required: false,
     },
 });
 
-export default mongoose.model('accountdb', schema, 'accountdb');
+export default mongoose.model('postdb', schema, 'postdb');

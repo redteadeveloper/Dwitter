@@ -99,7 +99,6 @@ export default {
                         password: interaction.options.getString('password'),
                         login: false,
                         description: "",
-                        posts: [],
                         friend: [],
                         follower: [],
                         following: [],

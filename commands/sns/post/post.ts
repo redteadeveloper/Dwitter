@@ -3,6 +3,7 @@ import { ICommand } from 'wokcommands';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import accountDB from '../../../db/accountdb';
 import discordDB from '../../../db/discorddb';
+import postDB from '../../../db/postdb'
 import { loginCheck, currentAccount } from '../../../modules/tools';
 
 export default {
@@ -57,14 +58,15 @@ export default {
             return;
         }
 
-        const post = {
-            author: await currentAccount(interaction.user.id),
+        await new postDB({
+            userID: interaction.user.id,
+            username: await currentAccount(interaction.user.id),
+            created: interaction.createdAt,
             title: interaction.options.getString("title"),
             content: interaction.options.getString("content"),
-            created: interaction.createdAt
-        }
-
-        await accountDB.updateOne({ username: await currentAccount(interaction.user.id) }, { $push: { posts: post }})
+            like: [],
+            comment: [],
+        }).save()
 
         const embed = new MessageEmbed()
             .setColor("#1877f2")

@@ -3,6 +3,8 @@ import { ICommand } from 'wokcommands';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import accountDB from '../../../db/accountdb';
 import discordDB from '../../../db/discorddb';
+import postDB from '../../../db/postdb';
+import { currentAccount } from '../../../modules/tools';
 
 export default {
     category: 'SNS',
@@ -33,7 +35,7 @@ export default {
             return;
         }
 
-        const posts = account.posts;
+        const posts = await postDB.find({ username: await currentAccount(interaction.user.id) })
 
         posts.sort((a: { created: Date; }, b: { created: Date; }) => (a.created > b.created) ? -1 : ((a.created < b.created) ? 1 : 0));
 
