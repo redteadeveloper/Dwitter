@@ -3,7 +3,8 @@ import { ICommand } from 'wokcommands';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import accountDB from '../../../db/accountdb';
 import discordDB from '../../../db/discorddb';
-import postDB from '../../../db/postdb'
+import postDB from '../../../db/postdb';
+import notifDB from '../../../db/notifdb';
 import { loginCheck, currentAccount } from '../../../modules/tools';
 
 export default {
@@ -66,6 +67,13 @@ export default {
             content: interaction.options.getString("content"),
             like: [],
             comment: [],
+        }).save()
+
+        await new notifDB({
+            from: await currentAccount(interaction.user.id),
+            target: (await accountDB.findOne({ username: await currentAccount(interaction.user.id) })).follower,
+            content: `${await currentAccount(interaction.user.id)} posted a new post!`,
+            read: [],
         }).save()
 
         const embed = new MessageEmbed()

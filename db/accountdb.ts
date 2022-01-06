@@ -29,10 +29,6 @@ const schema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    friend: {
-        type: Array,
-        required: false,
-    },
     follower: {
         type: Array,
         required: false,
